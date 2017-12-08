@@ -1,0 +1,39 @@
+<html>
+<head>
+  <script type="text/javascript">
+    // 这里是js代码
+    function getVote(int) {
+      if (window.XMLHttpRequest) {
+        // 创建 XMLHttpRequest 对象
+        // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行的代码
+        xmlhttp = new XMLHttpRequest();
+      } else {
+        //IE6, IE5 浏览器执行的代码
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      // 监听响应
+      xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState ==4 && xmlhttp.status == 200) {
+          // 找到 id 为 poll 的控件
+          document.getElementById('poll').innerHTML
+ = xmlhttp.responseText;
+        }
+      }
+      // 向PHP脚本传递主要参数q
+      xmlhttp.open("GET", "poll_vote.php?q=" + int, true);
+      xmlhttp.send();
+    }
+  </script>
+</head>
+<body>
+  <div id="poll">
+    <h3>你喜欢吃吗?</h3>
+    <form>
+      是：<input type="radio" 
+name="vote" value="0" onclick="getVote(this.value)"><br>
+      否：<input type="radio" 
+name="vote" value="1" onclick="getVote(this.value)">
+    </form>
+  </div>
+</body>
+</html>
